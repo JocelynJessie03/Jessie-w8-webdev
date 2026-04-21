@@ -7,7 +7,10 @@
     </div>
 @endif
     <h1>Store Page</h1>
+    {{-- Button for Insert --}}
+    @can('insert-product')
     <a href="{{ route('product.insert-form') }}" class="btn btn-primary">Insert New Product</a>
+    @endcan
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($products as $product)
             <div class="col">
@@ -18,12 +21,18 @@
                         <p class="card-text"><i>{{ $product->product_category->name }}</i></p>
                         <p class="card-text">Rp {{ number_format($product->price, 2) }}</p>
                         <p class="card-text">{{ $product->details }}</p>
+                        
+                        {{-- Button for edit --}}
+                        @can('edit-product')
                         <a href="{{ route('product_edit_form', $product->id) }}" class="btn btn-warning">Edit Product</a>
-                       
-                        <!-- Button trigger modal -->
+                        @endcan
+
+                        <!-- Button for Delete that trigger modal -->
+                        @can('delete-product') 
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
                             Delete
                         </button>
+                        @endcan
         
                         <!-- Delete Confirmation Modal -->
                         <div class="modal fade" id="deleteModal{{ $product->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $product->id }}" aria-hidden="true">
